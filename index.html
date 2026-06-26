@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=mobile2">
+  <link rel="stylesheet" href="style.css?v=layout5">
 </head>
 <body>
   <header class="site-header">
@@ -23,7 +23,12 @@
       <a href="#contactenos">Contáctenos</a>
       <a href="#redes">Redes</a>
     </nav>
-    <a class="header-cta" id="topWhatsappLink" href="https://wa.me/51993124676?text=Hola%20D%27Shannel%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20sus%20tortas%20personalizadas.%20Quisiera%20saber%20disponibilidad%2C%20sabores%20y%20opciones%20para%20un%20pedido." target="_blank" rel="noreferrer">Contáctenos</a>
+    <a class="header-cta" id="topWhatsappLink" href="https://wa.me/51993124676?text=Hola%20D%27Shannel%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20sus%20tortas%20personalizadas.%20Quisiera%20saber%20disponibilidad%2C%20sabores%20y%20opciones%20para%20un%20pedido." target="_blank" rel="noreferrer">
+      <span>Contáctenos</span>
+      <svg class="header-whatsapp-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0 11.9 11.9 0 0 0 1.8 17.8L0 24l6.4-1.7A11.9 11.9 0 0 0 12.1 24 11.9 11.9 0 0 0 24 12.1c0-3.2-1.2-6.2-3.5-8.6ZM12.1 22a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4A9.8 9.8 0 0 1 12.1 2a9.9 9.9 0 0 1 9.9 10.1A9.9 9.9 0 0 1 12.1 22Zm5.4-7.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2s-.8 1-.9 1.2c-.2.2-.3.2-.6.1a8.1 8.1 0 0 1-2.4-1.5A9 9 0 0 1 9.1 11c-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6 0-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5H7.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.3 3.4 1.4 3.6c.2.2 2.5 3.9 6.1 5.4.9.4 1.5.6 2.1.7.9.3 1.6.2 2.2.1.7-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4Z"/>
+      </svg>
+    </a>
   </header>
 
   <main>
@@ -34,11 +39,11 @@
         <img src="assets/logo.jpeg" alt="">
       </div>
       <div class="hero-content reveal">
-        <p class="eyebrow">Pastelería artesanal para celebraciones</p>
+        <p class="eyebrow">pasteleria gourmet</p>
         <h1>D'Shannel Pastelería</h1>
-        <p class="hero-copy">Tortas personalizadas, mesas dulces y detalles hechos con una presentación delicada, cálida y pensada para cada ocasión.</p>
+        <p class="hero-copy">Tortas personalizadas al gusto del cliente, mesas tematicas, maquetas, postres gourmet, hecho con profesionalismo que hara que tu dia especial sea un dia inolvidable.</p>
         <div class="hero-actions">
-          <a class="btn primary" href="#contactenos">Contáctenos</a>
+          <a class="btn primary whatsapp-contact" href="#contactenos">Contáctenos</a>
           <a class="btn primary soft" href="#arma">Armar mi torta</a>
           <a class="btn ghost" href="#servicios">Ver servicios</a>
         </div>
@@ -82,7 +87,7 @@
       </div>
       <div class="service-grid" id="serviceGrid" aria-live="polite"></div>
       <div class="section-action reveal">
-        <a class="btn primary" href="#contactenos">Contáctenos para cotizar</a>
+        <a class="btn primary whatsapp-contact" href="#contactenos">Contáctenos para cotizar</a>
       </div>
     </section>
 
@@ -188,7 +193,7 @@
             <img id="previewImage" alt="Vista previa de la referencia enviada">
             <div>
               <strong id="fileName">Imagen seleccionada</strong>
-              <small>En esta demo se menciona la foto seleccionada. En hosting con PHP se puede enviar como enlace.</small>
+              <small>La foto se subirá y se enviará como enlace dentro del mensaje de WhatsApp.</small>
             </div>
             <button class="remove-upload" id="removePhoto" type="button" aria-label="Quitar foto de referencia">Quitar</button>
           </div>
@@ -213,11 +218,11 @@
           <div class="form-row">
             <div class="field">
               <label for="clientName">Nombre</label>
-              <input id="clientName" name="clientName" type="text" placeholder="Nombre del cliente" required>
+              <input id="clientName" name="clientName" type="text" placeholder="Nombre del cliente" autocomplete="name" pattern="[A-Za-zÁÉÍÓÚáéíóúÑñ ]{2,}" title="Escribe solo letras en el nombre." required>
             </div>
             <div class="field">
               <label for="clientPhone">Teléfono</label>
-              <input id="clientPhone" name="clientPhone" type="tel" placeholder="Ej. 999 999 999">
+              <input id="clientPhone" name="clientPhone" type="tel" placeholder="Ej. +51 999 999 999" autocomplete="tel" inputmode="tel" maxlength="16" pattern="\+51 [0-9]{3} [0-9]{3} [0-9]{3}" title="Escribe un teléfono peruano válido. Ejemplo: +51 999 999 999">
             </div>
           </div>
           <div class="field">
@@ -250,7 +255,7 @@
       </div>
       <div class="social-links reveal" id="socialLinks"></div>
       <div class="section-action reveal">
-        <a class="btn primary" href="#contactenos">Contáctenos</a>
+        <a class="btn primary whatsapp-contact" href="#contactenos">Contáctenos</a>
       </div>
     </section>
   </main>

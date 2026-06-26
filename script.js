@@ -8,17 +8,17 @@ const defaultServices = [
   },
   {
     id: crypto.randomUUID(),
-    title: "Cupcakes decorados",
-    description: "Cupcakes temáticos ideales para mesas dulces, detalles corporativos o celebraciones pequeñas.",
-    includes: ["Decoración coordinada", "Presentación por pedido", "Sabores clásicos o especiales", "Colores según evento"],
-    tag: "Por encargo"
+    title: "Acompañamientos para tu mesa",
+    description: "Elige cómo acompañar tu mesa con dulces y postres preparados para cada ocasión.",
+    includes: ["CUPCAKE", "CAKEPOP", "PALETAS", "BROWNIES", "MANZANAS", "PIE DE MANZANA", "TARTALETAS", "OTROS: escríbenos qué deseas agregar"],
+    tag: "ELIGE COMO ACOMPAÑAR TU MESA"
   },
   {
     id: crypto.randomUUID(),
-    title: "Mesas dulces",
-    description: "Combinación de postres, bocaditos, cupcakes y torta central para eventos con una presentación armoniosa.",
-    includes: ["Selección de postres", "Armonía de colores", "Opciones por cantidad de invitados", "Asesoría para composición"],
-    tag: "Eventos"
+    title: "Realizamos todo tipo de eventos",
+    description: "Preparamos propuestas para celebraciones familiares, escolares, personales y empresariales.",
+    includes: ["Bodas inolvidables", "Promoción de colegios", "Graduaciones", "Aniversario", "15 años", "18 años", "Años festivos para pequeñas y grandes empresas: año nuevo, navidad y aniversario"],
+    tag: "Aqui en eventos"
   }
 ];
 
@@ -45,6 +45,8 @@ const consultForm = document.querySelector("#consultForm");
 const requestSummary = document.querySelector("#requestSummary");
 const whatsappLink = document.querySelector("#whatsappLink");
 const estimate = document.querySelector("#estimate");
+const clientName = document.querySelector("#clientName");
+const clientPhone = document.querySelector("#clientPhone");
 const referencePhoto = document.querySelector("#referencePhoto");
 const uploadPreview = document.querySelector("#uploadPreview");
 const previewImage = document.querySelector("#previewImage");
@@ -57,7 +59,7 @@ function getServices() {
   if (!saved) return defaultServices;
 
   const parsed = JSON.parse(saved);
-  if (parsed.some(service => !service.includes)) {
+  if (parsed.some(service => !service.includes || service.title === "Mesas dulces" || service.tag === "Por encargo")) {
     localStorage.removeItem("dshannel-services");
     return defaultServices;
   }
@@ -89,7 +91,7 @@ function renderServices() {
           ${service.includes.map(item => `<li>${item}</li>`).join("")}
         </ul>
       </div>
-      <a class="btn ghost dark" href="#contactenos" data-service="${service.title}">Contáctenos</a>
+      <a class="btn ghost dark whatsapp-contact" href="#contactenos" data-service="${service.title}">Contáctenos</a>
     </article>
   `).join("");
 
@@ -105,10 +107,7 @@ function renderSocials() {
   socialLinks.innerHTML = Object.values(socialData).map(item => `
     <a class="social-card ${item.className}" href="${item.url}" target="_blank" rel="noreferrer">
       <span class="network-icon social-icon">${item.icon}</span>
-      <div>
-        <span>${item.label}</span>
-        <strong>Visitar perfil oficial</strong>
-      </div>
+      <strong>${item.label}</strong>
     </a>
   `).join("");
 }
@@ -148,9 +147,29 @@ function updateWhatsapp() {
   whatsappLink.href = `https://wa.me/51993124676?text=${encodeURIComponent(text)}`;
 }
 
+function cleanClientName(value) {
+  return value.replace(/[^A-Za-zÁÉÍÓÚáéíóúÑñ ]/g, "").replace(/\s{2,}/g, " ");
+}
+
+function formatPeruPhone(value) {
+  const digits = value.replace(/\D/g, "");
+  const localNumber = digits.startsWith("51") ? digits.slice(2, 11) : digits.slice(0, 9);
+  const parts = [];
+
+  if (localNumber.slice(0, 3)) parts.push(localNumber.slice(0, 3));
+  if (localNumber.slice(3, 6)) parts.push(localNumber.slice(3, 6));
+  if (localNumber.slice(6, 9)) parts.push(localNumber.slice(6, 9));
+
+  return localNumber ? `+51 ${parts.join(" ")}` : "";
+}
+
+function isValidPeruPhone(value) {
+  return /^\+51 [0-9]{3} [0-9]{3} [0-9]{3}$/.test(value.trim());
+}
+
 function getFullConsultText() {
-  const name = document.querySelector("#clientName").value.trim();
-  const phone = document.querySelector("#clientPhone").value.trim();
+  const name = clientName.value.trim();
+  const phone = clientPhone.value.trim();
   const body = requestSummary.value.trim() || buildCakeSummary();
   return [`Cliente: ${name || "por indicar"}`, phone ? `Teléfono: ${phone}` : "", body].filter(Boolean).join("\n");
 }
@@ -181,7 +200,37 @@ function clearReferencePhoto() {
 removePhoto.addEventListener("click", clearReferencePhoto);
 
 async function uploadReferencePhoto() {
-  return null;
+  const file = referencePhoto.files[0];
+  if (!file) return null;
+
+  if (
+    uploadedReference &&
+    uploadedReference.fileName === file.name &&
+    uploadedReference.fileSize === file.size
+  ) {
+    return uploadedReference;
+  }
+
+  const data = new FormData();
+  data.append("referencePhoto", file);
+
+  const response = await fetch("upload_reference.php", {
+    method: "POST",
+    body: data
+  });
+  const result = await response.json();
+
+  if (!response.ok || !result.ok) {
+    throw new Error(result.error || "No se pudo subir la imagen");
+  }
+
+  uploadedReference = {
+    fileName: file.name,
+    fileSize: file.size,
+    url: result.url
+  };
+
+  return uploadedReference;
 }
 
 cakeForm.addEventListener("submit", event => {
@@ -192,9 +241,27 @@ cakeForm.addEventListener("submit", event => {
   showToast("Consulta preparada.");
 });
 
+clientName.addEventListener("input", () => {
+  const cleanedName = cleanClientName(clientName.value);
+  if (clientName.value !== cleanedName) clientName.value = cleanedName;
+});
+
+clientPhone.addEventListener("input", () => {
+  clientPhone.value = formatPeruPhone(clientPhone.value);
+});
+
 consultForm.addEventListener("input", updateWhatsapp);
 whatsappLink.addEventListener("click", async event => {
   event.preventDefault();
+  clientName.value = cleanClientName(clientName.value).trimStart();
+  clientPhone.value = formatPeruPhone(clientPhone.value);
+
+  if (clientPhone.value && !isValidPeruPhone(clientPhone.value)) {
+    clientPhone.reportValidity();
+    showToast("Escribe el teléfono con formato peruano: +51 999 999 999.");
+    return;
+  }
+
   if (!requestSummary.value.trim()) {
     requestSummary.value = buildCakeSummary();
     updateWhatsapp();
@@ -202,7 +269,13 @@ whatsappLink.addEventListener("click", async event => {
 
   const file = referencePhoto.files[0];
   if (file) {
-    showToast("Demo GitHub: la foto queda mencionada en el mensaje. En hosting PHP se envía como enlace.");
+    try {
+      showToast("Subiendo foto de referencia...");
+      const uploaded = await uploadReferencePhoto();
+      requestSummary.value = buildCakeSummary(uploaded.url);
+    } catch (error) {
+      showToast(error.message || "No se pudo subir la foto. Se enviará la consulta sin enlace.");
+    }
   }
 
   window.location.href = `https://wa.me/51993124676?text=${encodeURIComponent(getFullConsultText())}`;
@@ -210,6 +283,11 @@ whatsappLink.addEventListener("click", async event => {
 
 consultForm.addEventListener("submit", async event => {
   event.preventDefault();
+  clientName.value = cleanClientName(clientName.value).trim();
+  clientPhone.value = formatPeruPhone(clientPhone.value);
+
+  if (!consultForm.reportValidity()) return;
+
   const fullText = getFullConsultText();
 
   try {
