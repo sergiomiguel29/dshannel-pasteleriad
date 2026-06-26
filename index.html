@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D'Shannel Pastelería | Tortas personalizadas</title>
+  <meta name="description" content="D'Shannel Pastelería: tortas personalizadas, cupcakes, mesas dulces y pedidos especiales para celebraciones.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="#inicio" aria-label="Inicio D'Shannel Pastelería">
+      <img src="assets/logo.jpeg" alt="Logo de D'Shannel Pastelería">
+      <span>D'Shannel</span>
+    </a>
+    <nav class="nav-links" aria-label="Navegación principal">
+      <a href="#inicio">Inicio</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#arma">Arma tu torta</a>
+      <a href="#contactenos">Contáctenos</a>
+      <a href="#redes">Redes</a>
+    </nav>
+    <a class="header-cta" id="topWhatsappLink" href="https://wa.me/51993124676?text=Hola%20D%27Shannel%2C%20me%20gustar%C3%ADa%20recibir%20informaci%C3%B3n%20sobre%20sus%20tortas%20personalizadas.%20Quisiera%20saber%20disponibilidad%2C%20sabores%20y%20opciones%20para%20un%20pedido." target="_blank" rel="noreferrer">Contáctenos</a>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <img class="hero-bg" src="assets/hero-pasteleria.png" alt="Torta decorada y postres de pastelería fina">
+      <div class="hero-shade"></div>
+      <div class="hero-logo-mark reveal" aria-hidden="true">
+        <img src="assets/logo.jpeg" alt="">
+      </div>
+      <div class="hero-content reveal">
+        <p class="eyebrow">Pastelería artesanal para celebraciones</p>
+        <h1>D'Shannel Pastelería</h1>
+        <p class="hero-copy">Tortas personalizadas, mesas dulces y detalles hechos con una presentación delicada, cálida y pensada para cada ocasión.</p>
+        <div class="hero-actions">
+          <a class="btn primary" href="#contactenos">Contáctenos</a>
+          <a class="btn primary soft" href="#arma">Armar mi torta</a>
+          <a class="btn ghost" href="#servicios">Ver servicios</a>
+        </div>
+      </div>
+      <aside class="hero-panel reveal" aria-label="Resumen de atención">
+        <span>Pedidos por encargo</span>
+        <strong>Desde tortas pequeñas hasta eventos completos</strong>
+        <p>Elige molde, porciones, sabor, relleno, decoración y fecha de entrega.</p>
+      </aside>
+    </section>
+
+    <section class="section intro reveal">
+      <div>
+        <p class="eyebrow">Cómo funciona</p>
+        <h2>Un pedido claro desde el primer mensaje</h2>
+      </div>
+      <div class="steps">
+        <article>
+          <span>01</span>
+          <h3>Escoge el servicio</h3>
+          <p>Tortas, cupcakes, postres en vaso, bocaditos dulces o mesas temáticas.</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h3>Personaliza detalles</h3>
+          <p>Define tamaño, sabor, relleno, colores, dedicatoria y referencias.</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h3>Solicita tu cotización</h3>
+          <p>Envía tu selección y recibe una cotización ajustada al diseño final.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="servicios">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Catálogo</p>
+        <h2>Servicios disponibles</h2>
+        <p>Conoce lo que podemos preparar para tu celebración. Cada pedido se trabaja de forma personalizada.</p>
+      </div>
+      <div class="service-grid" id="serviceGrid" aria-live="polite"></div>
+      <div class="section-action reveal">
+        <a class="btn primary" href="#contactenos">Contáctenos para cotizar</a>
+      </div>
+    </section>
+
+    <section class="section cake-builder" id="arma">
+      <div class="builder-info reveal">
+        <p class="eyebrow">Cotizador guiado</p>
+        <h2>Arma tu propia torta</h2>
+        <p>Los moldes se muestran con equivalencia en centímetros para que el cliente entienda mejor el tamaño antes de pedir.</p>
+        <div class="mold-help">
+          <h3>Referencia de moldes</h3>
+          <ul>
+            <li><strong>Molde 16:</strong> aprox. 16 cm de diámetro, 8 a 10 porciones.</li>
+            <li><strong>Molde 18:</strong> aprox. 18 cm de diámetro, 10 a 14 porciones.</li>
+            <li><strong>Molde 20:</strong> aprox. 20 cm de diámetro, 15 a 20 porciones.</li>
+            <li><strong>Molde 24:</strong> aprox. 24 cm de diámetro, 25 a 30 porciones.</li>
+          </ul>
+        </div>
+      </div>
+
+      <form class="builder-form reveal" id="cakeForm">
+        <div class="field">
+          <label for="mold">Molde y porciones</label>
+          <select id="mold" name="mold">
+            <option value="Molde 16 - 16 cm - 8 a 10 porciones" data-price="65">Molde 16 - 16 cm - 8 a 10 porciones</option>
+            <option value="Molde 18 - 18 cm - 10 a 14 porciones" data-price="82">Molde 18 - 18 cm - 10 a 14 porciones</option>
+            <option value="Molde 20 - 20 cm - 15 a 20 porciones" data-price="105">Molde 20 - 20 cm - 15 a 20 porciones</option>
+            <option value="Molde 24 - 24 cm - 25 a 30 porciones" data-price="148">Molde 24 - 24 cm - 25 a 30 porciones</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="flavor">Sabor de bizcocho</label>
+            <select id="flavor" name="flavor">
+              <option value="" selected disabled>Selecciona el sabor de bizcocho</option>
+              <option>Vainilla</option>
+              <option>Chocolate</option>
+              <option>Marmoleado</option>
+              <option>Naranja</option>
+              <option>Limón</option>
+              <option>Coco</option>
+              <option>Lúcuma</option>
+              <option>Red Velvet</option>
+              <option>Tres Leches</option>
+              <option>Selva Negra</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="filling">Relleno</label>
+            <select id="filling" name="filling">
+              <option value="" selected disabled>Selecciona el relleno</option>
+              <option>Manjar blanco</option>
+              <option>Fudge</option>
+              <option>Chantilly</option>
+              <option>Crema pastelera</option>
+              <option>Ganache</option>
+              <option>Ganache de chocolate</option>
+              <option>Mermelada de fresa</option>
+              <option>Mermelada de piña</option>
+              <option>Mousse de maracuyá</option>
+              <option>Mousse de lúcuma</option>
+              <option>Crema de Oreo</option>
+              <option>Nutella</option>
+              <option>Cream Cheese</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="field">
+            <label for="style">Decoración o temática</label>
+            <input id="style" name="style" list="decorationIdeas" type="text" placeholder="Ej. flores, drip cake, mariposas, fútbol, Stitch...">
+            <datalist id="decorationIdeas">
+              <option value="Clásica con flores">
+              <option value="Drip cake elegante">
+              <option value="Temática infantil">
+              <option value="Minimalista premium">
+              <option value="Con nombre y edad">
+              <option value="Con mariposas">
+              <option value="Torta de fútbol">
+              <option value="Torta de princesa">
+              <option value="Torta con foto comestible">
+            </datalist>
+          </div>
+          <div class="field">
+            <label for="delivery">Fecha deseada</label>
+            <input id="delivery" name="delivery" type="date">
+          </div>
+        </div>
+        <div class="field">
+          <label for="notes">Detalles del cliente</label>
+          <textarea id="notes" name="notes" rows="4" placeholder="Colores, nombre, edad, temática o imagen de referencia..."></textarea>
+        </div>
+        <div class="field">
+          <label for="referencePhoto">Foto de referencia</label>
+          <label class="upload-box" for="referencePhoto">
+            <input id="referencePhoto" name="referencePhoto" type="file" accept="image/*">
+            <span class="upload-icon" aria-hidden="true">+</span>
+            <span>
+              <strong>Subir imagen de la torta que te gustaría</strong>
+              <small>JPG, PNG o foto desde tu celular. Sirve como referencia para cotizar mejor.</small>
+            </span>
+          </label>
+          <div class="upload-preview" id="uploadPreview" hidden>
+            <img id="previewImage" alt="Vista previa de la referencia enviada">
+            <div>
+              <strong id="fileName">Imagen seleccionada</strong>
+              <small>En esta demo se menciona la foto seleccionada. En hosting con PHP se puede enviar como enlace.</small>
+            </div>
+            <button class="remove-upload" id="removePhoto" type="button" aria-label="Quitar foto de referencia">Quitar</button>
+          </div>
+        </div>
+        <div class="estimate-box">
+          <span>Monto aproximado</span>
+          <strong id="estimate">S/ 83</strong>
+          <small>Es una guía para orientar el pedido. La cotización final depende del diseño, decoración, delivery y detalles especiales.</small>
+        </div>
+        <button class="btn primary full" type="submit">Enviar a contáctenos</button>
+      </form>
+    </section>
+
+    <section class="section prices" id="contactenos">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Atención al cliente</p>
+        <h2>Contáctenos</h2>
+        <p>Cuéntanos qué deseas preparar y te responderemos con una cotización personalizada según tamaño, diseño y fecha.</p>
+      </div>
+      <div class="consult-wrap reveal">
+        <form class="consult-form" id="consultForm">
+          <div class="form-row">
+            <div class="field">
+              <label for="clientName">Nombre</label>
+              <input id="clientName" name="clientName" type="text" placeholder="Nombre del cliente" required>
+            </div>
+            <div class="field">
+              <label for="clientPhone">Teléfono</label>
+              <input id="clientPhone" name="clientPhone" type="tel" placeholder="Ej. 999 999 999">
+            </div>
+          </div>
+          <div class="field">
+            <label for="requestSummary">Consulta</label>
+            <textarea id="requestSummary" name="requestSummary" rows="6" placeholder="Aquí aparecerá el resumen de la torta o puedes escribir una consulta directa." required></textarea>
+          </div>
+          <div class="consult-actions">
+            <button class="btn primary" type="submit">Copiar consulta</button>
+            <a class="btn whatsapp" id="whatsappLink" href="#" target="_blank" rel="noreferrer">
+              <span class="network-icon whatsapp-icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"><path d="M20.5 3.5A11.8 11.8 0 0 0 12.1 0 11.9 11.9 0 0 0 1.8 17.8L0 24l6.4-1.7A11.9 11.9 0 0 0 12.1 24 11.9 11.9 0 0 0 24 12.1c0-3.2-1.2-6.2-3.5-8.6ZM12.1 22a9.8 9.8 0 0 1-5-1.4l-.4-.2-3.8 1 1-3.7-.2-.4A9.8 9.8 0 0 1 12.1 2a9.9 9.9 0 0 1 9.9 10.1A9.9 9.9 0 0 1 12.1 22Zm5.4-7.4c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2s-.8 1-.9 1.2c-.2.2-.3.2-.6.1a8.1 8.1 0 0 1-2.4-1.5A9 9 0 0 1 9.1 11c-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.5.1-.2.1-.4 0-.6 0-.2-.7-1.7-1-2.3-.3-.6-.5-.5-.7-.5H7.7c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 2.9s1.3 3.4 1.4 3.6c.2.2 2.5 3.9 6.1 5.4.9.4 1.5.6 2.1.7.9.3 1.6.2 2.2.1.7-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.2-.3-.3-.6-.4Z"/></svg>
+              </span>
+              Enviar por WhatsApp
+            </a>
+          </div>
+        </form>
+        <div class="price-notes">
+          <h3>Cotización personalizada</h3>
+          <p>Los pedidos se cotizan según molde, cantidad de porciones, sabor, relleno, nivel de decoración y fecha de entrega.</p>
+          <p>Recomendación: pedir con 3 a 5 días de anticipación para decoraciones especiales.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section social-section" id="redes">
+      <div class="section-heading reveal">
+        <p class="eyebrow">Redes sociales</p>
+        <h2>Síguenos en redes</h2>
+        <p>Encuentra novedades, diseños recientes y referencias para tu próximo pedido.</p>
+      </div>
+      <div class="social-links reveal" id="socialLinks"></div>
+      <div class="section-action reveal">
+        <a class="btn primary" href="#contactenos">Contáctenos</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <img src="assets/logo.jpeg" alt="Logo de D'Shannel Pastelería">
+    <div>
+      <strong>D'Shannel Pastelería</strong>
+      <p>Tortas y postres personalizados para fechas especiales.</p>
+      <small>© 2026 D'Shannel Pastelería. Todos los derechos reservados.</small>
+    </div>
+    <nav class="footer-links" aria-label="Enlaces legales">
+      <a href="politica-privacidad.html">Política de privacidad</a>
+      <a href="terminos-condiciones.html">Términos y condiciones</a>
+      <a href="#contactenos">Contáctenos</a>
+      <a href="#inicio">Volver arriba</a>
+    </nav>
+  </footer>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
