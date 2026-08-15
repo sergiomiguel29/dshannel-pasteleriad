@@ -33,16 +33,20 @@ const progressSteps = [...document.querySelectorAll(".progress-step")];
 const prevStep = document.querySelector("#prevStep");
 const nextStep = document.querySelector("#nextStep");
 const prepareQuote = document.querySelector("#prepareQuote");
+const stepCounter = document.querySelector("#stepCounter");
+const stepName = document.querySelector("#stepName");
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
 const filterChips = [...document.querySelectorAll(".filter-chip")];
 const catalogProducts = [...document.querySelectorAll(".catalog-product")];
-const productLinks = [...document.querySelectorAll("[data-product]")];
-const categoryLinks = [...document.querySelectorAll("[data-filter-link]")];
 
 let currentStep = 0;
 let uploadedReference = null;
 let previewUrl = null;
+
+if (navLinks && !navLinks.querySelector(".mobile-nav-cta")) {
+  navLinks.insertAdjacentHTML("beforeend", `<a class="mobile-nav-cta" href="cotizar.html">Cotiza tu torta</a>`);
+}
 
 function money(value) {
   return `S/ ${Number(value || 0).toFixed(0)}`;
@@ -57,14 +61,15 @@ function showToast(message) {
 }
 
 function selectedRadio(name) {
-  return cakeForm.querySelector(`input[name="${name}"]:checked`);
+  return cakeForm?.querySelector(`input[name="${name}"]:checked`) || null;
 }
 
 function fieldValue(id) {
-  return cakeForm.querySelector(`#${id}`)?.value.trim() || "";
+  return cakeForm?.querySelector(`#${id}`)?.value.trim() || "";
 }
 
 function calculateEstimate() {
+  if (!cakeForm || !estimate) return 0;
   const mold = selectedRadio("mold");
   const decoration = fieldValue("style");
   const total = Number(mold?.dataset.price || 0) + (decoration ? 20 : 0);
@@ -77,10 +82,8 @@ function selectedText(name, fallback = "por definir") {
 }
 
 function buildSummaryRows(photoUrl = "") {
-  const selectedFile = referencePhoto.files[0];
-  const photoText = selectedFile
-    ? photoUrl || `Seleccionada: ${selectedFile.name}`
-    : "no adjuntada";
+  const selectedFile = referencePhoto?.files?.[0];
+  const photoText = selectedFile ? photoUrl || `Seleccionada: ${selectedFile.name}` : "no adjuntada";
 
   return [
     ["Tamaño", selectedText("mold")],
@@ -89,26 +92,27 @@ function buildSummaryRows(photoUrl = "") {
     ["Decoración", fieldValue("style") || "por definir"],
     ["Fecha deseada", fieldValue("delivery") || "por confirmar"],
     ["Detalles", fieldValue("notes") || "sin detalles adicionales por ahora"],
-    ["Foto de referencia", photoText],
-    ["Monto aproximado", money(calculateEstimate())]
+    ["Foto de referencia", photoText]
   ];
 }
 
 function renderBuilderSummary() {
+  if (!builderSummary) return;
   builderSummary.innerHTML = buildSummaryRows()
     .map(([label, value]) => `<p><span>${label}</span><strong>${value}</strong></p>`)
     .join("");
 }
 
 function buildCakeSummary(photoUrl = "") {
-  const rows = buildSummaryRows(photoUrl);
   return [
     "Hola D'Shannel, quisiera cotizar una torta personalizada.",
-    ...rows.map(([label, value]) => `${label}: ${value}`)
+    ...buildSummaryRows(photoUrl).map(([label, value]) => `${label}: ${value}`),
+    `Monto aproximado: ${money(calculateEstimate())}`
   ].join("\n");
 }
 
 function updateWhatsapp() {
+  if (!whatsappLink || !requestSummary) return;
   const text = requestSummary.value.trim() || "Hola D'Shannel, quisiera consultar disponibilidad y una cotización personalizada.";
   whatsappLink.href = `https://wa.me/51993124676?text=${encodeURIComponent(text)}`;
 }
@@ -121,11 +125,9 @@ function formatPeruPhone(value) {
   const digits = value.replace(/\D/g, "");
   const localNumber = digits.startsWith("51") ? digits.slice(2, 11) : digits.slice(0, 9);
   const parts = [];
-
   if (localNumber.slice(0, 3)) parts.push(localNumber.slice(0, 3));
   if (localNumber.slice(3, 6)) parts.push(localNumber.slice(3, 6));
   if (localNumber.slice(6, 9)) parts.push(localNumber.slice(6, 9));
-
   return localNumber ? `+51 ${parts.join(" ")}` : "";
 }
 
@@ -134,23 +136,30 @@ function isValidPeruPhone(value) {
 }
 
 function getFullConsultText() {
-  const name = clientName.value.trim();
-  const phone = clientPhone.value.trim();
-  const body = requestSummary.value.trim() || buildCakeSummary();
+  const name = clientName?.value.trim() || "";
+  const phone = clientPhone?.value.trim() || "";
+  const body = requestSummary?.value.trim() || buildCakeSummary();
   return [`Cliente: ${name || "por indicar"}`, phone ? `Teléfono: ${phone}` : "", body].filter(Boolean).join("\n");
 }
 
 function setStep(index) {
+  if (!steps.length) return;
   currentStep = Math.max(0, Math.min(index, steps.length - 1));
   steps.forEach((step, stepIndex) => step.classList.toggle("active", stepIndex === currentStep));
-  progressSteps.forEach((step, stepIndex) => step.classList.toggle("active", stepIndex === currentStep));
-  prevStep.classList.toggle("hidden", currentStep === 0);
-  nextStep.classList.toggle("hidden", currentStep === steps.length - 1);
-  prepareQuote.classList.toggle("hidden", currentStep !== steps.length - 1);
+  progressSteps.forEach((step, stepIndex) => {
+    step.classList.toggle("active", stepIndex === currentStep);
+    step.classList.toggle("done", stepIndex < currentStep);
+  });
+  prevStep?.classList.toggle("hidden", currentStep === 0);
+  nextStep?.classList.toggle("hidden", currentStep === steps.length - 1);
+  prepareQuote?.classList.toggle("hidden", currentStep !== steps.length - 1);
+  if (stepCounter) stepCounter.textContent = `Paso ${currentStep + 1} de ${steps.length}`;
+  if (stepName) stepName.textContent = steps[currentStep]?.dataset.title || "";
   renderBuilderSummary();
 }
 
 function renderSocials() {
+  if (!socialLinks) return;
   socialLinks.innerHTML = Object.values(socialData).map(item => `
     <a class="social-card ${item.className}" href="${item.url}" target="_blank" rel="noreferrer">
       <span class="social-icon">${item.icon}</span>
@@ -162,73 +171,52 @@ function renderSocials() {
 function applyCatalogFilter(filter) {
   filterChips.forEach(chip => chip.classList.toggle("active", chip.dataset.filter === filter));
   catalogProducts.forEach(product => {
-    const categories = product.dataset.category.split(" ");
-    const shouldShow = filter === "todos" || categories.includes(filter);
-    product.classList.toggle("is-hidden", !shouldShow);
+    const categories = (product.dataset.category || "").split(" ");
+    product.classList.toggle("is-hidden", filter !== "todos" && !categories.includes(filter));
   });
 }
 
-function selectProduct(productName) {
+function readInitialFilters() {
+  const params = new URLSearchParams(window.location.search);
+  const category = params.get("categoria");
+  if (category && filterChips.some(chip => chip.dataset.filter === category)) applyCatalogFilter(category);
+}
+
+function readInitialProduct() {
+  if (!cakeForm) return;
+  const product = new URLSearchParams(window.location.search).get("producto");
+  if (!product) return;
   const styleField = cakeForm.querySelector("#style");
   const notesField = cakeForm.querySelector("#notes");
-
-  if (styleField && !styleField.value.trim()) {
-    styleField.value = productName;
-  }
-
-  if (notesField && !notesField.value.trim()) {
-    notesField.value = `Me interesa cotizar una ${productName}.`;
-  }
-
-  requestSummary.value = `Hola D'Shannel, quisiera cotizar la ${productName}.`;
-  calculateEstimate();
-  renderBuilderSummary();
-  updateWhatsapp();
-  showToast(`${productName} agregada a tu consulta.`);
+  if (styleField) styleField.value = product;
+  if (notesField) notesField.value = `Me interesa cotizar: ${product}.`;
+  if (requestSummary) requestSummary.value = `Hola D'Shannel, quisiera cotizar: ${product}.`;
 }
 
 function clearReferencePhoto() {
+  if (!referencePhoto || !uploadPreview || !previewImage || !fileName) return;
   referencePhoto.value = "";
   uploadedReference = null;
   uploadPreview.hidden = true;
   previewImage.removeAttribute("src");
   fileName.textContent = "Imagen seleccionada";
-
-  if (previewUrl) {
-    URL.revokeObjectURL(previewUrl);
-    previewUrl = null;
-  }
-
+  if (previewUrl) URL.revokeObjectURL(previewUrl);
+  previewUrl = null;
   renderBuilderSummary();
 }
 
 async function uploadReferencePhoto() {
-  const file = referencePhoto.files[0];
+  const file = referencePhoto?.files?.[0];
   if (!file) return null;
-
-  if (uploadedReference && uploadedReference.fileName === file.name && uploadedReference.fileSize === file.size) {
-    return uploadedReference;
-  }
+  if (uploadedReference && uploadedReference.fileName === file.name && uploadedReference.fileSize === file.size) return uploadedReference;
 
   const data = new FormData();
   data.append("referencePhoto", file);
-
-  const response = await fetch("upload_reference.php", {
-    method: "POST",
-    body: data
-  });
+  const response = await fetch("upload_reference.php", { method: "POST", body: data });
   const result = await response.json();
+  if (!response.ok || !result.ok) throw new Error(result.error || "No se pudo subir la imagen");
 
-  if (!response.ok || !result.ok) {
-    throw new Error(result.error || "No se pudo subir la imagen");
-  }
-
-  uploadedReference = {
-    fileName: file.name,
-    fileSize: file.size,
-    url: result.url
-  };
-
+  uploadedReference = { fileName: file.name, fileSize: file.size, url: result.url };
   return uploadedReference;
 }
 
@@ -240,8 +228,7 @@ function initReveals() {
         observer.unobserve(entry.target);
       }
     });
-  }, { threshold: 0.12 });
-
+  }, { threshold: 0.1 });
   document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
 }
 
@@ -257,44 +244,28 @@ navLinks?.addEventListener("click", event => {
   }
 });
 
-progressSteps.forEach(button => {
-  button.addEventListener("click", () => setStep(Number(button.dataset.goto)));
-});
+filterChips.forEach(chip => chip.addEventListener("click", () => applyCatalogFilter(chip.dataset.filter)));
+progressSteps.forEach(button => button.addEventListener("click", () => setStep(Number(button.dataset.goto))));
+prevStep?.addEventListener("click", () => setStep(currentStep - 1));
+nextStep?.addEventListener("click", () => setStep(currentStep + 1));
 
-filterChips.forEach(chip => {
-  chip.addEventListener("click", () => applyCatalogFilter(chip.dataset.filter));
-});
-
-categoryLinks.forEach(link => {
-  link.addEventListener("click", () => applyCatalogFilter(link.dataset.filterLink));
-});
-
-productLinks.forEach(link => {
-  link.addEventListener("click", () => selectProduct(link.dataset.product));
-});
-
-prevStep.addEventListener("click", () => setStep(currentStep - 1));
-nextStep.addEventListener("click", () => setStep(currentStep + 1));
-
-cakeForm.addEventListener("change", () => {
+cakeForm?.addEventListener("change", () => {
   calculateEstimate();
   renderBuilderSummary();
 });
 
-cakeForm.addEventListener("input", () => {
+cakeForm?.addEventListener("input", () => {
   calculateEstimate();
   renderBuilderSummary();
 });
 
-referencePhoto.addEventListener("change", () => {
+referencePhoto?.addEventListener("change", () => {
   const file = referencePhoto.files[0];
   uploadedReference = null;
-
   if (!file) {
     clearReferencePhoto();
     return;
   }
-
   if (previewUrl) URL.revokeObjectURL(previewUrl);
   previewUrl = URL.createObjectURL(file);
   previewImage.src = previewUrl;
@@ -303,70 +274,59 @@ referencePhoto.addEventListener("change", () => {
   renderBuilderSummary();
 });
 
-removePhoto.addEventListener("click", clearReferencePhoto);
+removePhoto?.addEventListener("click", clearReferencePhoto);
 
-cakeForm.addEventListener("submit", event => {
+cakeForm?.addEventListener("submit", event => {
   event.preventDefault();
-  requestSummary.value = buildCakeSummary();
+  if (requestSummary) requestSummary.value = buildCakeSummary();
   updateWhatsapp();
-  document.querySelector("#contactenos").scrollIntoView({ behavior: "smooth" });
+  document.querySelector("#consultForm")?.scrollIntoView({ behavior: "smooth" });
   showToast("Consulta preparada para WhatsApp.");
 });
 
-clientName.addEventListener("input", () => {
+clientName?.addEventListener("input", () => {
   const cleanedName = cleanClientName(clientName.value);
   if (clientName.value !== cleanedName) clientName.value = cleanedName;
 });
 
-clientPhone.addEventListener("input", () => {
+clientPhone?.addEventListener("input", () => {
   clientPhone.value = formatPeruPhone(clientPhone.value);
 });
 
-consultForm.addEventListener("input", updateWhatsapp);
+consultForm?.addEventListener("input", updateWhatsapp);
 
-whatsappLink.addEventListener("click", async event => {
+whatsappLink?.addEventListener("click", async event => {
   event.preventDefault();
-  clientName.value = cleanClientName(clientName.value).trimStart();
-  clientPhone.value = formatPeruPhone(clientPhone.value);
-
-  if (clientPhone.value && !isValidPeruPhone(clientPhone.value)) {
+  if (clientName) clientName.value = cleanClientName(clientName.value).trimStart();
+  if (clientPhone) clientPhone.value = formatPeruPhone(clientPhone.value);
+  if (clientPhone?.value && !isValidPeruPhone(clientPhone.value)) {
     clientPhone.reportValidity();
     showToast("Escribe el teléfono con formato peruano: +51 999 999 999.");
     return;
   }
+  if (requestSummary && !requestSummary.value.trim()) requestSummary.value = buildCakeSummary();
 
-  if (!requestSummary.value.trim()) {
-    requestSummary.value = buildCakeSummary();
-  }
-
-  const file = referencePhoto.files[0];
+  const file = referencePhoto?.files?.[0];
   if (file) {
     try {
       showToast("Subiendo foto de referencia...");
       const uploaded = await uploadReferencePhoto();
       requestSummary.value = buildCakeSummary(uploaded.url);
     } catch (error) {
-      const filename = file.name ? ` Archivo seleccionado: ${file.name}.` : "";
-      requestSummary.value = `${buildCakeSummary()}\nNota: la foto no pudo subirse en esta versión demo.${filename}`;
-      showToast(error.message || "No se pudo subir la foto. Se enviará el nombre del archivo.");
+      requestSummary.value = `${buildCakeSummary()}\nNota: la foto no pudo subirse en esta versión demo. Archivo seleccionado: ${file.name}.`;
+      showToast(error.message || "No se pudo subir la foto.");
     }
   }
-
-  const fullText = getFullConsultText();
-  window.location.href = `https://wa.me/51993124676?text=${encodeURIComponent(fullText)}`;
+  window.location.href = `https://wa.me/51993124676?text=${encodeURIComponent(getFullConsultText())}`;
 });
 
-consultForm.addEventListener("submit", async event => {
+consultForm?.addEventListener("submit", async event => {
   event.preventDefault();
-  clientName.value = cleanClientName(clientName.value).trim();
-  clientPhone.value = formatPeruPhone(clientPhone.value);
-
+  if (clientName) clientName.value = cleanClientName(clientName.value).trim();
+  if (clientPhone) clientPhone.value = formatPeruPhone(clientPhone.value);
   if (!consultForm.reportValidity()) return;
-
-  const fullText = getFullConsultText();
-
   try {
-    await navigator.clipboard.writeText(fullText);
+    await navigator.clipboard.writeText(getFullConsultText());
     showToast("Consulta copiada.");
   } catch {
     showToast("La consulta está lista para enviar.");
@@ -375,8 +335,10 @@ consultForm.addEventListener("submit", async event => {
 
 renderSocials();
 applyCatalogFilter("todos");
+readInitialFilters();
+readInitialProduct();
 calculateEstimate();
 renderBuilderSummary();
-updateWhatsapp();
 setStep(0);
+updateWhatsapp();
 initReveals();

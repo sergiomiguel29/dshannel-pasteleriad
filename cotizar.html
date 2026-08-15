@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cotiza tu torta | D'Shannel Pastelería</title>
+  <meta name="description" content="Arma tu torta personalizada y envía la cotización por WhatsApp a D'Shannel Pastelería.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=site1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html"><strong>D'Shannel</strong><span>PASTELERÍA</span></a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
+      <nav class="nav-links"><a href="index.html">Inicio</a><a href="tortas.html">Tortas</a><a href="postres.html">Postres</a><a href="disenos.html">Diseños</a><a href="nosotros.html">Nosotros</a></nav>
+      <a class="header-cta active" href="cotizar.html">Cotiza tu torta</a>
+    </div>
+  </header>
+
+  <main class="quote-page">
+    <section class="container quote-intro reveal">
+      <p class="eyebrow">Cotiza tu torta</p>
+      <h1>Arma tu torta ideal</h1>
+      <p>Elige tamaño, sabor, relleno y diseño. Al terminar tendrás un resumen listo para enviarnos por WhatsApp.</p>
+    </section>
+
+    <section class="container builder-card reveal">
+      <form class="cake-form" id="cakeForm">
+        <div class="builder-progress" aria-label="Progreso del configurador">
+          <div class="step-meta">
+            <span id="stepCounter">Paso 1 de 6</span>
+            <strong id="stepName">Tamaño</strong>
+          </div>
+          <div class="step-dots">
+            <button type="button" class="progress-step active" data-goto="0" aria-label="Tamaño"></button>
+            <button type="button" class="progress-step" data-goto="1" aria-label="Sabor"></button>
+            <button type="button" class="progress-step" data-goto="2" aria-label="Relleno"></button>
+            <button type="button" class="progress-step" data-goto="3" aria-label="Diseño"></button>
+            <button type="button" class="progress-step" data-goto="4" aria-label="Fecha"></button>
+            <button type="button" class="progress-step" data-goto="5" aria-label="Pedido"></button>
+          </div>
+        </div>
+
+        <section class="builder-step active" data-step="0" data-title="Tamaño">
+          <p class="step-label">01 Tamaño</p>
+          <h3>¿Para cuántas personas será?</h3>
+          <div class="choice-grid size-grid">
+            <label class="choice-tile"><input type="radio" name="mold" value="Molde 16 - 16 cm - 8 a 10 porciones" data-price="65" checked><span>Pequeña</span><strong>Molde 16</strong><small>16 cm · 8 a 10 porciones</small></label>
+            <label class="choice-tile"><input type="radio" name="mold" value="Molde 18 - 18 cm - 10 a 14 porciones" data-price="82"><span>Mediana</span><strong>Molde 18</strong><small>18 cm · 10 a 14 porciones</small></label>
+            <label class="choice-tile"><input type="radio" name="mold" value="Molde 20 - 20 cm - 15 a 20 porciones" data-price="105"><span>Grande</span><strong>Molde 20</strong><small>20 cm · 15 a 20 porciones</small></label>
+            <label class="choice-tile"><input type="radio" name="mold" value="Molde 24 - 24 cm - 25 a 30 porciones" data-price="148"><span>Evento</span><strong>Molde 24</strong><small>24 cm · 25 a 30 porciones</small></label>
+          </div>
+        </section>
+
+        <section class="builder-step" data-step="1" data-title="Sabor">
+          <p class="step-label">02 Sabor</p>
+          <h3>Elige un sabor o déjalo por definir.</h3>
+          <div class="choice-grid compact">
+            <label><input type="radio" name="flavor" value="Vainilla"><span>Vainilla</span></label><label><input type="radio" name="flavor" value="Chocolate"><span>Chocolate</span></label><label><input type="radio" name="flavor" value="Marmoleado"><span>Marmoleado</span></label><label><input type="radio" name="flavor" value="Naranja"><span>Naranja</span></label><label><input type="radio" name="flavor" value="Limón"><span>Limón</span></label><label><input type="radio" name="flavor" value="Coco"><span>Coco</span></label><label><input type="radio" name="flavor" value="Lúcuma"><span>Lúcuma</span></label><label><input type="radio" name="flavor" value="Red Velvet"><span>Red Velvet</span></label><label><input type="radio" name="flavor" value="Tres Leches"><span>Tres Leches</span></label><label><input type="radio" name="flavor" value="Selva Negra"><span>Selva Negra</span></label>
+          </div>
+        </section>
+
+        <section class="builder-step" data-step="2" data-title="Relleno">
+          <p class="step-label">03 Relleno</p>
+          <h3>Selecciona el relleno que prefieres.</h3>
+          <div class="choice-grid compact">
+            <label><input type="radio" name="filling" value="Manjar blanco"><span>Manjar blanco</span></label><label><input type="radio" name="filling" value="Fudge"><span>Fudge</span></label><label><input type="radio" name="filling" value="Chantilly"><span>Chantilly</span></label><label><input type="radio" name="filling" value="Crema pastelera"><span>Crema pastelera</span></label><label><input type="radio" name="filling" value="Ganache de chocolate"><span>Ganache</span></label><label><input type="radio" name="filling" value="Mermelada de fresa"><span>Mermelada fresa</span></label><label><input type="radio" name="filling" value="Mermelada de piña"><span>Mermelada piña</span></label><label><input type="radio" name="filling" value="Mousse de maracuyá"><span>Mousse maracuyá</span></label><label><input type="radio" name="filling" value="Mousse de lúcuma"><span>Mousse lúcuma</span></label><label><input type="radio" name="filling" value="Crema de Oreo"><span>Crema Oreo</span></label><label><input type="radio" name="filling" value="Nutella"><span>Nutella</span></label><label><input type="radio" name="filling" value="Cream Cheese"><span>Cream Cheese</span></label>
+          </div>
+        </section>
+
+        <section class="builder-step" data-step="3" data-title="Diseño">
+          <p class="step-label">04 Diseño</p>
+          <h3>Cuéntanos cómo la imaginas.</h3>
+          <label class="field"><span>Decoración o temática</span><input id="style" name="style" type="text" placeholder="Ej. flores, drip cake, mariposas, fútbol, temática infantil..."></label>
+          <label class="field"><span>Detalles del cliente</span><textarea id="notes" name="notes" rows="4" placeholder="Colores, nombre, edad, dedicatoria o detalles especiales..."></textarea></label>
+          <div class="field">
+            <span>Foto de referencia</span>
+            <label class="upload-box" for="referencePhoto"><input id="referencePhoto" name="referencePhoto" type="file" accept="image/*"><span class="upload-icon" aria-hidden="true">+</span><span><strong>Sube una foto de inspiración</strong><small>Ayuda a cotizar con más precisión.</small></span></label>
+            <div class="upload-preview" id="uploadPreview" hidden><img id="previewImage" alt="Vista previa de la referencia enviada"><div><strong id="fileName">Imagen seleccionada</strong><small>En hosting con PHP se enviará como enlace por WhatsApp.</small></div><button class="remove-upload" id="removePhoto" type="button">Quitar</button></div>
+          </div>
+        </section>
+
+        <section class="builder-step" data-step="4" data-title="Fecha">
+          <p class="step-label">05 Fecha</p>
+          <h3>¿Cuándo la necesitas?</h3>
+          <label class="field"><span>Fecha deseada</span><input id="delivery" name="delivery" type="date"></label>
+          <p>Recomendamos pedir con 3 a 5 días de anticipación para decoraciones especiales.</p>
+        </section>
+
+        <section class="builder-step" data-step="5" data-title="Pedido">
+          <p class="step-label">06 Tu pedido</p>
+          <h3>Revisa tu torta antes de enviarla.</h3>
+          <p>Tu resumen aparece al lado y también se copiará en la consulta de WhatsApp.</p>
+        </section>
+
+        <div class="builder-controls">
+          <button class="btn secondary" type="button" id="prevStep">Anterior</button>
+          <button class="btn primary" type="button" id="nextStep">Continuar</button>
+          <button class="btn primary full hidden" type="submit" id="prepareQuote">Preparar consulta</button>
+        </div>
+      </form>
+
+      <aside class="builder-summary-panel">
+        <div>
+          <p class="eyebrow">Resumen del pedido</p>
+          <div class="summary-list" id="builderSummary"></div>
+        </div>
+        <div class="estimate-box">
+          <span>Monto aproximado</span>
+          <strong id="estimate">S/ 65</strong>
+        </div>
+      </aside>
+    </section>
+
+    <section class="container">
+      <form class="consult-form reveal" id="consultForm">
+        <p class="eyebrow">Enviar por WhatsApp</p>
+        <label class="field"><span>Nombre</span><input id="clientName" name="clientName" type="text" placeholder="Nombre del cliente" autocomplete="name"></label>
+        <label class="field"><span>Teléfono</span><input id="clientPhone" name="clientPhone" type="tel" placeholder="Ej. +51 999 999 999" autocomplete="tel" inputmode="tel" maxlength="16"></label>
+        <label class="field"><span>Consulta</span><textarea id="requestSummary" name="requestSummary" rows="6" placeholder="Aquí aparecerá el resumen de tu torta o puedes escribir una consulta directa."></textarea></label>
+        <div class="consult-actions"><button class="btn secondary" type="submit">Copiar consulta</button><a class="btn whatsapp" id="whatsappLink" href="https://wa.me/51993124676" target="_blank" rel="noreferrer">Hablar por WhatsApp</a></div>
+      </form>
+    </section>
+  </main>
+
+  <footer class="site-footer"><div class="container footer-inner"><div class="footer-brand"><a class="brand" href="index.html"><strong>D'Shannel</strong><span>PASTELERÍA</span></a><p>Tortas y postres personalizados.</p></div><nav class="footer-links"><a href="tortas.html">Tortas</a><a href="postres.html">Postres</a><a href="disenos.html">Diseños</a><a href="politica-privacidad.html">Privacidad</a><a href="terminos-condiciones.html">Términos</a></nav></div></footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js?v=site1"></script>
+</body>
+</html>

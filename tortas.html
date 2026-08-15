@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tortas D'Shannel | Catálogo</title>
+  <meta name="description" content="Catálogo de tortas personalizadas de D'Shannel Pastelería.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=site1">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="brand" href="index.html"><strong>D'Shannel</strong><span>PASTELERÍA</span></a>
+      <button class="menu-toggle" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
+      <nav class="nav-links" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a class="active" href="tortas.html">Tortas</a>
+        <a href="postres.html">Postres</a>
+        <a href="disenos.html">Diseños</a>
+        <a href="nosotros.html">Nosotros</a>
+      </nav>
+      <a class="header-cta" href="cotizar.html">Cotiza tu torta</a>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="container page-hero">
+      <div class="reveal">
+        <p class="eyebrow">Catálogo</p>
+        <h1>Tortas D'Shannel</h1>
+        <p>Explora ideas por ocasión. Cada diseño puede ajustarse en tamaño, sabor, relleno y decoración.</p>
+      </div>
+      <img class="reveal" src="assets/catalog/torta-floral-rose.jpg" alt="Torta Floral Rosé">
+    </section>
+
+    <section class="container">
+      <div class="catalog-filters reveal" aria-label="Filtros del catálogo">
+        <button class="filter-chip active" type="button" data-filter="todos">Todas</button>
+        <button class="filter-chip" type="button" data-filter="cumpleanos">Cumpleaños</button>
+        <button class="filter-chip" type="button" data-filter="infantiles">Infantiles</button>
+        <button class="filter-chip" type="button" data-filter="elegantes">Elegantes</button>
+        <button class="filter-chip" type="button" data-filter="bodas">Bodas</button>
+        <button class="filter-chip" type="button" data-filter="personalizadas">Personalizadas</button>
+      </div>
+      <div class="catalog-grid reveal" id="catalogGrid">
+        <article class="product-card catalog-product" data-category="cumpleanos personalizadas">
+          <img src="assets/catalog/torta-red-velvet.jpg" alt="Torta Red Velvet">
+          <div><p class="product-kicker">Cumpleaños</p><h3>Torta Red Velvet</h3><p>Red velvet · relleno de cream cheese</p><a href="cotizar.html?producto=Torta%20Red%20Velvet">Cotizar esta torta</a></div>
+        </article>
+        <article class="product-card catalog-product" data-category="cumpleanos elegantes">
+          <img src="assets/catalog/torta-chocolate-drip.jpg" alt="Torta Chocolate Drip">
+          <div><p class="product-kicker">Cumpleaños</p><h3>Torta Chocolate Drip</h3><p>Chocolate · fudge · decoración drip</p><a href="cotizar.html?producto=Torta%20Chocolate%20Drip">Cotizar esta torta</a></div>
+        </article>
+        <article class="product-card catalog-product" data-category="elegantes personalizadas">
+          <img src="assets/catalog/torta-floral-rose.jpg" alt="Torta Floral Rosé">
+          <div><p class="product-kicker">Elegantes</p><h3>Torta Floral Rosé</h3><p>Vainilla · manjar · decoración floral</p><a href="cotizar.html?producto=Torta%20Floral%20Rose">Cotizar esta torta</a></div>
+        </article>
+        <article class="product-card catalog-product" data-category="cumpleanos personalizadas">
+          <img src="assets/catalog/torta-fresas-chocolate.jpg" alt="Torta Fresas y Chocolate">
+          <div><p class="product-kicker">Personalizadas</p><h3>Torta Fresas & Chocolate</h3><p>Chocolate · crema · fresas</p><a href="cotizar.html?producto=Torta%20Fresas%20y%20Chocolate">Cotizar esta torta</a></div>
+        </article>
+        <article class="product-card catalog-product" data-category="infantiles personalizadas">
+          <img src="assets/catalog/torta-infantil-azul.jpg" alt="Torta temática infantil">
+          <div><p class="product-kicker">Infantiles</p><h3>Torta Stitch</h3><p>Torta temática infantil personalizada</p><a href="cotizar.html?producto=Torta%20Stitch">Cotizar esta torta</a></div>
+        </article>
+        <article class="product-card catalog-product" data-category="infantiles personalizadas">
+          <img src="assets/catalog/torta-princesa.jpg" alt="Torta Princesa">
+          <div><p class="product-kicker">Infantiles</p><h3>Torta Princesa</h3><p>Diseño infantil personalizado</p><a href="cotizar.html?producto=Torta%20Princesa">Cotizar esta torta</a></div>
+        </article>
+        <article class="product-card catalog-product" data-category="elegantes cumpleanos">
+          <img src="assets/catalog/torta-elegance.jpg" alt="Torta Elegance">
+          <div><p class="product-kicker">Elegantes</p><h3>Torta Elegance</h3><p>Diseño elegante para cumpleaños</p><a href="cotizar.html?producto=Torta%20Elegance">Cotizar esta torta</a></div>
+        </article>
+        <article class="product-card catalog-product" data-category="bodas elegantes personalizadas">
+          <img src="assets/catalog/torta-bodas.jpg" alt="Torta de Bodas">
+          <div><p class="product-kicker">Bodas</p><h3>Torta de Bodas</h3><p>Diseño de varios pisos personalizado</p><a href="cotizar.html?producto=Torta%20de%20Bodas">Cotizar esta torta</a></div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="footer-brand"><a class="brand" href="index.html"><strong>D'Shannel</strong><span>PASTELERÍA</span></a><p>Tortas y postres personalizados.</p></div>
+      <nav class="footer-links"><a href="postres.html">Postres</a><a href="disenos.html">Diseños</a><a href="cotizar.html">Cotiza tu torta</a><a href="politica-privacidad.html">Privacidad</a><a href="terminos-condiciones.html">Términos</a></nav>
+    </div>
+  </footer>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script src="script.js?v=site1"></script>
+</body>
+</html>
