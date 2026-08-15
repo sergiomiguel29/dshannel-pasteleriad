@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=boutique1">
+  <link rel="stylesheet" href="style.css?v=boutique2">
 </head>
 <body>
   <header class="site-header">
@@ -21,10 +21,10 @@
       <span></span>
     </button>
     <nav class="nav-links" aria-label="Navegación principal">
-      <a href="#disenos">Diseños</a>
-      <a href="#tortas">Tortas</a>
-      <a href="#postres">Postres</a>
-      <a href="#nosotros">Nosotros</a>
+      <a href="#disenos">Favoritos</a>
+      <a href="#tortas">Categorías</a>
+      <a href="#catalogo">Catálogo</a>
+      <a href="#arma">Cotizar</a>
     </nav>
     <a class="header-cta" href="#arma">Arma tu torta</a>
   </header>
@@ -36,8 +36,8 @@
         <h1>Creamos el dulce protagonista de tu celebración.</h1>
         <p>Tortas y postres personalizados hechos especialmente para tu momento.</p>
         <div class="hero-actions">
-          <a class="btn primary" href="#arma">Arma tu torta</a>
-          <a class="btn secondary" href="#disenos">Ver diseños</a>
+          <a class="btn primary" href="#catalogo">Ver catálogo</a>
+          <a class="btn secondary" href="#arma">Arma tu torta</a>
         </div>
       </div>
       <div class="hero-visual reveal">
@@ -55,91 +55,182 @@
     <section class="favorites section" id="disenos">
       <div class="section-kicker reveal">
         <p class="eyebrow">Nuestros favoritos</p>
-        <h2>Fotografías que ayudan a imaginar tu torta.</h2>
+        <h2>Tortas que venden antes que el texto.</h2>
       </div>
-      <div class="masonry-gallery reveal">
-        <figure class="gallery-item large">
-          <img src="assets/hero-pasteleria.png" alt="Torta personalizada rosada">
-          <figcaption>Torta personalizada</figcaption>
+      <div class="favorites-grid reveal">
+        <figure class="favorite-product large">
+          <img src="assets/catalog/torta-red-velvet.jpg" alt="Torta Red Velvet">
+          <figcaption>
+            <strong>Torta Red Velvet</strong>
+            <span>Red velvet · cream cheese</span>
+            <a href="#arma" data-product="Torta Red Velvet">Cotizar esta torta</a>
+          </figcaption>
         </figure>
-        <figure class="gallery-item tall">
-          <img src="assets/hero-pasteleria.png" alt="Pastelería boutique para celebraciones">
-          <figcaption>Cumpleaños</figcaption>
+        <figure class="favorite-product">
+          <img src="assets/catalog/torta-chocolate-drip.jpg" alt="Torta Chocolate Drip">
+          <figcaption>
+            <strong>Torta Chocolate Drip</strong>
+            <span>Chocolate · fudge · drip</span>
+            <a href="#arma" data-product="Torta Chocolate Drip">Cotizar esta torta</a>
+          </figcaption>
         </figure>
-        <figure class="gallery-item">
-          <img src="assets/hero-pasteleria.png" alt="Postres de mesa dulce">
-          <figcaption>Mesa dulce</figcaption>
+        <figure class="favorite-product">
+          <img src="assets/catalog/torta-floral-rose.jpg" alt="Torta Floral Rosé">
+          <figcaption>
+            <strong>Torta Floral Rosé</strong>
+            <span>Decoración floral personalizada</span>
+            <a href="#arma" data-product="Torta Floral Rosé">Cotizar esta torta</a>
+          </figcaption>
         </figure>
-        <figure class="gallery-item wide">
-          <img src="assets/hero-pasteleria.png" alt="Cupcakes y macarons personalizados">
-          <figcaption>Postres gourmet</figcaption>
+        <figure class="favorite-product wide">
+          <img src="assets/catalog/torta-fresas-chocolate.jpg" alt="Torta Fresas y Chocolate">
+          <figcaption>
+            <strong>Torta Fresas & Chocolate</strong>
+            <span>Chocolate · crema · fresas</span>
+            <a href="#arma" data-product="Torta Fresas & Chocolate">Cotizar esta torta</a>
+          </figcaption>
         </figure>
       </div>
-      <p class="photo-note reveal">Galería preparada para reemplazar estas imágenes por trabajos reales de D'Shannel.</p>
     </section>
 
     <section class="occasion section" id="tortas">
       <div class="section-kicker reveal">
         <p class="eyebrow">Encuentra tu torta</p>
-        <h2>Elige por ocasión.</h2>
+        <h2>Explora por ocasión.</h2>
       </div>
       <div class="occasion-track reveal">
-        <a class="occasion-card" href="#arma">
-          <img src="assets/hero-pasteleria.png" alt="Torta de cumpleaños">
+        <a class="occasion-card" href="#catalogo" data-filter-link="cumpleanos">
+          <img src="assets/catalog/torta-chocolate-drip.jpg" alt="Torta de cumpleaños">
           <span>Cumpleaños</span>
         </a>
-        <a class="occasion-card" href="#arma">
-          <img src="assets/hero-pasteleria.png" alt="Torta infantil">
+        <a class="occasion-card" href="#catalogo" data-filter-link="infantiles">
+          <img src="assets/catalog/torta-infantil-azul.jpg" alt="Torta infantil">
           <span>Infantiles</span>
         </a>
-        <a class="occasion-card" href="#arma">
-          <img src="assets/hero-pasteleria.png" alt="Torta elegante">
+        <a class="occasion-card" href="#catalogo" data-filter-link="elegantes">
+          <img src="assets/catalog/torta-elegance.jpg" alt="Torta elegante">
           <span>Elegantes</span>
         </a>
-        <a class="occasion-card" href="#arma">
-          <img src="assets/hero-pasteleria.png" alt="Torta para matrimonio">
-          <span>Matrimonios</span>
+        <a class="occasion-card" href="#catalogo" data-filter-link="bodas">
+          <img src="assets/catalog/torta-bodas.jpg" alt="Torta para matrimonio">
+          <span>Bodas</span>
         </a>
-        <a class="occasion-card" href="#arma">
-          <img src="assets/hero-pasteleria.png" alt="Torta personalizada">
+        <a class="occasion-card" href="#catalogo" data-filter-link="personalizadas">
+          <img src="assets/catalog/torta-floral-rose.jpg" alt="Torta personalizada">
           <span>Personalizadas</span>
         </a>
       </div>
     </section>
 
-    <section class="editorial section" id="nosotros">
-      <div class="editorial-image reveal">
-        <img src="assets/hero-pasteleria.png" alt="Detalle de torta artesanal">
+    <section class="catalog section" id="catalogo">
+      <div class="section-kicker reveal">
+        <p class="eyebrow">Catálogo de tortas</p>
+        <h2>Elige una idea y cotízala.</h2>
       </div>
-      <div class="editorial-text reveal">
-        <p class="eyebrow">Hecho especialmente para ti</p>
-        <h2>Cada celebración merece algo hecho especialmente para ella.</h2>
-        <p>D'Shannel prepara tortas y postres personalizados según la ocasión, estilo y preferencias del cliente.</p>
-        <p>Cuidamos el tamaño, sabor, relleno, diseño y presentación para que el pedido tenga identidad propia.</p>
-        <div class="editorial-tags">
-          <span>Hecho a pedido</span>
-          <span>Personalizado</span>
-          <span>Con dedicación</span>
-        </div>
+      <div class="catalog-filters reveal" aria-label="Filtros del catálogo">
+        <button class="filter-chip active" type="button" data-filter="todos">Todos</button>
+        <button class="filter-chip" type="button" data-filter="cumpleanos">Cumpleaños</button>
+        <button class="filter-chip" type="button" data-filter="infantiles">Infantiles</button>
+        <button class="filter-chip" type="button" data-filter="elegantes">Elegantes</button>
+        <button class="filter-chip" type="button" data-filter="bodas">Bodas</button>
+        <button class="filter-chip" type="button" data-filter="personalizadas">Personalizadas</button>
+      </div>
+      <div class="catalog-grid reveal" id="catalogGrid">
+        <article class="catalog-product" data-category="cumpleanos personalizadas">
+          <img src="assets/catalog/torta-red-velvet.jpg" alt="Torta Red Velvet">
+          <div>
+            <span>Cumpleaños</span>
+            <h3>Torta Red Velvet</h3>
+            <p>Red velvet · relleno de cream cheese</p>
+            <a href="#arma" data-product="Torta Red Velvet">Ver / Cotizar</a>
+          </div>
+        </article>
+        <article class="catalog-product" data-category="cumpleanos elegantes">
+          <img src="assets/catalog/torta-chocolate-drip.jpg" alt="Torta Chocolate Drip">
+          <div>
+            <span>Cumpleaños</span>
+            <h3>Torta Chocolate Drip</h3>
+            <p>Chocolate · fudge · decoración drip</p>
+            <a href="#arma" data-product="Torta Chocolate Drip">Ver / Cotizar</a>
+          </div>
+        </article>
+        <article class="catalog-product" data-category="elegantes personalizadas">
+          <img src="assets/catalog/torta-floral-rose.jpg" alt="Torta Floral Rosé">
+          <div>
+            <span>Elegantes</span>
+            <h3>Torta Floral Rosé</h3>
+            <p>Vainilla · manjar · decoración floral</p>
+            <a href="#arma" data-product="Torta Floral Rosé">Ver / Cotizar</a>
+          </div>
+        </article>
+        <article class="catalog-product" data-category="cumpleanos personalizadas">
+          <img src="assets/catalog/torta-fresas-chocolate.jpg" alt="Torta Fresas y Chocolate">
+          <div>
+            <span>Personalizadas</span>
+            <h3>Torta Fresas & Chocolate</h3>
+            <p>Chocolate · crema · fresas</p>
+            <a href="#arma" data-product="Torta Fresas & Chocolate">Ver / Cotizar</a>
+          </div>
+        </article>
+        <article class="catalog-product" data-category="infantiles personalizadas">
+          <img src="assets/catalog/torta-infantil-azul.jpg" alt="Torta temática infantil">
+          <div>
+            <span>Infantiles</span>
+            <h3>Torta Stitch</h3>
+            <p>Torta temática infantil personalizada</p>
+            <a href="#arma" data-product="Torta Stitch">Ver / Cotizar</a>
+          </div>
+        </article>
+        <article class="catalog-product" data-category="infantiles personalizadas">
+          <img src="assets/catalog/torta-princesa.jpg" alt="Torta Princesa">
+          <div>
+            <span>Infantiles</span>
+            <h3>Torta Princesa</h3>
+            <p>Diseño infantil personalizado</p>
+            <a href="#arma" data-product="Torta Princesa">Ver / Cotizar</a>
+          </div>
+        </article>
+        <article class="catalog-product" data-category="elegantes cumpleanos">
+          <img src="assets/catalog/torta-elegance.jpg" alt="Torta Elegance">
+          <div>
+            <span>Elegantes</span>
+            <h3>Torta Elegance</h3>
+            <p>Diseño elegante para cumpleaños</p>
+            <a href="#arma" data-product="Torta Elegance">Ver / Cotizar</a>
+          </div>
+        </article>
+        <article class="catalog-product" data-category="bodas elegantes personalizadas">
+          <img src="assets/catalog/torta-bodas.jpg" alt="Torta de Bodas">
+          <div>
+            <span>Bodas</span>
+            <h3>Torta de Bodas</h3>
+            <p>Diseño de varios pisos personalizado</p>
+            <a href="#arma" data-product="Torta de Bodas">Ver / Cotizar</a>
+          </div>
+        </article>
       </div>
     </section>
 
-    <section class="process-strip section">
+    <section class="process-strip section" id="como-funciona">
+      <div class="section-kicker compact-kicker reveal">
+        <p class="eyebrow">Cómo funciona</p>
+        <h2>Comprar debe sentirse simple.</h2>
+      </div>
       <div class="process-line reveal">
         <article>
           <span>01</span>
           <strong>Elige</strong>
-          <p>Selecciona lo que necesitas.</p>
+          <p>Selecciona una torta o una categoría.</p>
         </article>
         <article>
           <span>02</span>
           <strong>Personaliza</strong>
-          <p>Escoge tamaño, sabor y diseño.</p>
+          <p>Ajusta tamaño, sabor, relleno y diseño.</p>
         </article>
         <article>
           <span>03</span>
           <strong>Cotiza</strong>
-          <p>Envíanos tu pedido para confirmarlo.</p>
+          <p>Envíanos tu pedido por WhatsApp.</p>
         </article>
       </div>
     </section>
@@ -246,15 +337,15 @@
                 <input id="referencePhoto" name="referencePhoto" type="file" accept="image/*">
                 <span class="upload-icon" aria-hidden="true">+</span>
                 <span>
-                  <strong>Arrastra tu inspiración aquí</strong>
-                  <small>Sube una foto para cotizar con más precisión.</small>
+                  <strong>Sube una foto de inspiración</strong>
+                  <small>Ayuda a cotizar con más precisión.</small>
                 </span>
               </label>
               <div class="upload-preview" id="uploadPreview" hidden>
                 <img id="previewImage" alt="Vista previa de la referencia enviada">
                 <div>
                   <strong id="fileName">Imagen seleccionada</strong>
-                  <small>La foto se subirá y se enviará como enlace en WhatsApp.</small>
+                  <small>En hosting con PHP se enviará como enlace por WhatsApp.</small>
                 </div>
                 <button class="remove-upload" id="removePhoto" type="button">Quitar</button>
               </div>
@@ -279,7 +370,7 @@
 
           <div class="builder-controls">
             <button class="btn secondary" type="button" id="prevStep">Anterior</button>
-            <button class="btn primary" type="button" id="nextStep">Siguiente</button>
+            <button class="btn primary" type="button" id="nextStep">Continuar</button>
             <button class="btn primary full hidden" type="submit" id="prepareQuote">Solicitar cotización</button>
           </div>
         </form>
@@ -295,13 +386,13 @@
     <section class="last-works section" id="postres">
       <div class="section-kicker reveal">
         <p class="eyebrow">Últimos trabajos</p>
-        <h2>Un feed preparado para mostrar trabajos reales.</h2>
+        <h2>Más ideas para inspirarte.</h2>
       </div>
       <div class="work-feed reveal">
-        <img src="assets/hero-pasteleria.png" alt="Trabajo reciente de pastelería">
-        <img src="assets/hero-pasteleria.png" alt="Decoración de torta personalizada">
-        <img src="assets/hero-pasteleria.png" alt="Postres personalizados">
-        <img src="assets/hero-pasteleria.png" alt="Mesa dulce">
+        <img src="assets/catalog/torta-princesa.jpg" alt="Trabajo reciente de pastelería">
+        <img src="assets/catalog/torta-elegance.jpg" alt="Decoración de torta personalizada">
+        <img src="assets/catalog/torta-bodas.jpg" alt="Torta de varios pisos">
+        <img src="assets/catalog/torta-infantil-azul.jpg" alt="Torta temática infantil">
       </div>
     </section>
 
@@ -349,9 +440,9 @@
       </div>
     </div>
     <nav class="footer-links" aria-label="Enlaces de pie de página">
-      <a href="#disenos">Diseños</a>
-      <a href="#tortas">Tortas</a>
-      <a href="#postres">Postres</a>
+      <a href="#disenos">Favoritos</a>
+      <a href="#tortas">Categorías</a>
+      <a href="#catalogo">Catálogo</a>
       <a href="#arma">Arma tu torta</a>
       <a href="politica-privacidad.html">Privacidad</a>
       <a href="terminos-condiciones.html">Términos</a>
@@ -359,6 +450,6 @@
   </footer>
 
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
-  <script src="script.js?v=boutique1"></script>
+  <script src="script.js?v=boutique2"></script>
 </body>
 </html>

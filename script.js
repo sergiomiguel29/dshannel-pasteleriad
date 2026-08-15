@@ -35,6 +35,10 @@ const nextStep = document.querySelector("#nextStep");
 const prepareQuote = document.querySelector("#prepareQuote");
 const menuToggle = document.querySelector(".menu-toggle");
 const navLinks = document.querySelector(".nav-links");
+const filterChips = [...document.querySelectorAll(".filter-chip")];
+const catalogProducts = [...document.querySelectorAll(".catalog-product")];
+const productLinks = [...document.querySelectorAll("[data-product]")];
+const categoryLinks = [...document.querySelectorAll("[data-filter-link]")];
 
 let currentStep = 0;
 let uploadedReference = null;
@@ -155,6 +159,34 @@ function renderSocials() {
   `).join("");
 }
 
+function applyCatalogFilter(filter) {
+  filterChips.forEach(chip => chip.classList.toggle("active", chip.dataset.filter === filter));
+  catalogProducts.forEach(product => {
+    const categories = product.dataset.category.split(" ");
+    const shouldShow = filter === "todos" || categories.includes(filter);
+    product.classList.toggle("is-hidden", !shouldShow);
+  });
+}
+
+function selectProduct(productName) {
+  const styleField = cakeForm.querySelector("#style");
+  const notesField = cakeForm.querySelector("#notes");
+
+  if (styleField && !styleField.value.trim()) {
+    styleField.value = productName;
+  }
+
+  if (notesField && !notesField.value.trim()) {
+    notesField.value = `Me interesa cotizar una ${productName}.`;
+  }
+
+  requestSummary.value = `Hola D'Shannel, quisiera cotizar la ${productName}.`;
+  calculateEstimate();
+  renderBuilderSummary();
+  updateWhatsapp();
+  showToast(`${productName} agregada a tu consulta.`);
+}
+
 function clearReferencePhoto() {
   referencePhoto.value = "";
   uploadedReference = null;
@@ -227,6 +259,18 @@ navLinks?.addEventListener("click", event => {
 
 progressSteps.forEach(button => {
   button.addEventListener("click", () => setStep(Number(button.dataset.goto)));
+});
+
+filterChips.forEach(chip => {
+  chip.addEventListener("click", () => applyCatalogFilter(chip.dataset.filter));
+});
+
+categoryLinks.forEach(link => {
+  link.addEventListener("click", () => applyCatalogFilter(link.dataset.filterLink));
+});
+
+productLinks.forEach(link => {
+  link.addEventListener("click", () => selectProduct(link.dataset.product));
 });
 
 prevStep.addEventListener("click", () => setStep(currentStep - 1));
@@ -330,6 +374,7 @@ consultForm.addEventListener("submit", async event => {
 });
 
 renderSocials();
+applyCatalogFilter("todos");
 calculateEstimate();
 renderBuilderSummary();
 updateWhatsapp();
