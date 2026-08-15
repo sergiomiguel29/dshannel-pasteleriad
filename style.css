@@ -76,9 +76,9 @@ button {
 
 .header-inner {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto 1fr auto auto;
   align-items: center;
-  gap: var(--space-md);
+  gap: 12px;
   min-height: 76px;
 }
 
@@ -143,6 +143,10 @@ button {
   display: none;
 }
 
+.mobile-nav-whatsapp {
+  display: none;
+}
+
 .header-cta,
 .btn {
   display: inline-flex;
@@ -177,6 +181,29 @@ button {
 .header-cta:hover,
 .btn:hover {
   transform: translateY(-2px);
+}
+
+.whatsapp-shortcut {
+  display: inline-grid;
+  place-items: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  box-shadow: 0 12px 28px rgba(37, 211, 102, 0.22);
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.whatsapp-shortcut:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 32px rgba(37, 211, 102, 0.28);
+}
+
+.whatsapp-shortcut svg {
+  width: 25px;
+  height: 25px;
+  fill: currentColor;
 }
 
 .menu-toggle {
@@ -1149,7 +1176,8 @@ p {
     min-height: 70px;
   }
 
-  .header-cta {
+  .header-cta,
+  .whatsapp-shortcut {
     display: none;
   }
 
@@ -1157,7 +1185,8 @@ p {
     inset: 78px 18px auto 18px;
   }
 
-  .mobile-nav-cta {
+  .mobile-nav-cta,
+  .mobile-nav-whatsapp {
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -1167,6 +1196,11 @@ p {
     background: var(--wine);
     color: #fff !important;
     font-weight: 900;
+  }
+
+  .mobile-nav-whatsapp {
+    background: #25d366;
+    color: #073b1b !important;
   }
 
   h1 {
