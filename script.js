@@ -1,27 +1,3 @@
-const defaultServices = [
-  {
-    id: crypto.randomUUID(),
-    title: "Tortas personalizadas",
-    description: "Diseños para cumpleaños, bautizos, aniversarios y fechas especiales con sabores y rellenos a elección.",
-    includes: ["Bizcocho a elección", "Relleno personalizado", "Decoración según temática", "Dedicatoria o nombre"],
-    tag: "Más pedido"
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Acompañamientos para tu mesa",
-    description: "Elige cómo acompañar tu mesa con dulces y postres preparados para cada ocasión.",
-    includes: ["CUPCAKE", "CAKEPOP", "PALETAS", "BROWNIES", "MANZANAS", "PIE DE MANZANA", "TARTALETAS", "OTROS: escríbenos qué deseas agregar"],
-    tag: "ELIGE COMO ACOMPAÑAR TU MESA"
-  },
-  {
-    id: crypto.randomUUID(),
-    title: "Realizamos todo tipo de eventos",
-    description: "Preparamos propuestas para celebraciones familiares, escolares, personales y empresariales.",
-    includes: ["Bodas inolvidables", "Promoción de colegios", "Graduaciones", "Aniversario", "15 años", "18 años", "Años festivos para pequeñas y grandes empresas: año nuevo, navidad y aniversario"],
-    tag: "Aqui en eventos"
-  }
-];
-
 const socialData = {
   facebook: {
     label: "Facebook",
@@ -37,8 +13,6 @@ const socialData = {
   }
 };
 
-const serviceGrid = document.querySelector("#serviceGrid");
-const socialLinks = document.querySelector("#socialLinks");
 const toast = document.querySelector("#toast");
 const cakeForm = document.querySelector("#cakeForm");
 const consultForm = document.querySelector("#consultForm");
@@ -52,93 +26,81 @@ const uploadPreview = document.querySelector("#uploadPreview");
 const previewImage = document.querySelector("#previewImage");
 const fileName = document.querySelector("#fileName");
 const removePhoto = document.querySelector("#removePhoto");
+const socialLinks = document.querySelector("#socialLinks");
+const builderSummary = document.querySelector("#builderSummary");
+const steps = [...document.querySelectorAll(".builder-step")];
+const progressSteps = [...document.querySelectorAll(".progress-step")];
+const prevStep = document.querySelector("#prevStep");
+const nextStep = document.querySelector("#nextStep");
+const prepareQuote = document.querySelector("#prepareQuote");
+const menuToggle = document.querySelector(".menu-toggle");
+const navLinks = document.querySelector(".nav-links");
+
+let currentStep = 0;
 let uploadedReference = null;
-
-function getServices() {
-  const saved = localStorage.getItem("dshannel-services");
-  if (!saved) return defaultServices;
-
-  const parsed = JSON.parse(saved);
-  if (parsed.some(service => !service.includes || service.title === "Mesas dulces" || service.tag === "Por encargo")) {
-    localStorage.removeItem("dshannel-services");
-    return defaultServices;
-  }
-
-  return parsed;
-}
+let previewUrl = null;
 
 function money(value) {
   return `S/ ${Number(value || 0).toFixed(0)}`;
 }
 
 function showToast(message) {
+  if (!toast) return;
   toast.textContent = message;
   toast.classList.add("show");
   window.clearTimeout(showToast.timer);
   showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 2600);
 }
 
-function renderServices() {
-  const services = getServices();
-  serviceGrid.innerHTML = services.map(service => `
-    <article class="service-card reveal visible">
-      <span>${service.tag}</span>
-      <h3>${service.title}</h3>
-      <p>${service.description}</p>
-      <div class="includes">
-        <strong>Qué incluye</strong>
-        <ul>
-          ${service.includes.map(item => `<li>${item}</li>`).join("")}
-        </ul>
-      </div>
-      <a class="btn ghost dark whatsapp-contact" href="#contactenos" data-service="${service.title}">Contáctenos</a>
-    </article>
-  `).join("");
-
-  document.querySelectorAll("[data-service]").forEach(link => {
-    link.addEventListener("click", () => {
-      requestSummary.value = `Hola D'Shannel, quisiera consultar por el servicio: ${link.dataset.service}.`;
-      updateWhatsapp();
-    });
-  });
+function selectedRadio(name) {
+  return cakeForm.querySelector(`input[name="${name}"]:checked`);
 }
 
-function renderSocials() {
-  socialLinks.innerHTML = Object.values(socialData).map(item => `
-    <a class="social-card ${item.className}" href="${item.url}" target="_blank" rel="noreferrer">
-      <span class="network-icon social-icon">${item.icon}</span>
-      <strong>${item.label}</strong>
-    </a>
-  `).join("");
+function fieldValue(id) {
+  return cakeForm.querySelector(`#${id}`)?.value.trim() || "";
 }
 
 function calculateEstimate() {
-  const mold = cakeForm.mold.selectedOptions[0];
-  const decorationText = cakeForm.style.value.trim();
-  const total = Number(mold.dataset.price) + (decorationText ? 20 : 0);
+  const mold = selectedRadio("mold");
+  const decoration = fieldValue("style");
+  const total = Number(mold?.dataset.price || 0) + (decoration ? 20 : 0);
   estimate.textContent = money(total);
   return total;
 }
 
-function buildCakeSummary(photoUrl = "") {
-  const total = calculateEstimate();
+function selectedText(name, fallback = "por definir") {
+  return selectedRadio(name)?.value || fallback;
+}
+
+function buildSummaryRows(photoUrl = "") {
   const selectedFile = referencePhoto.files[0];
-  const photoLine = selectedFile
-    ? photoUrl
-      ? `Foto de referencia: ${photoUrl}`
-      : `Foto de referencia: sí, seleccioné ${selectedFile.name}`
-    : "Foto de referencia: no adjuntada";
+  const photoText = selectedFile
+    ? photoUrl || `Seleccionada: ${selectedFile.name}`
+    : "no adjuntada";
 
   return [
+    ["Tamaño", selectedText("mold")],
+    ["Sabor", selectedText("flavor")],
+    ["Relleno", selectedText("filling")],
+    ["Decoración", fieldValue("style") || "por definir"],
+    ["Fecha deseada", fieldValue("delivery") || "por confirmar"],
+    ["Detalles", fieldValue("notes") || "sin detalles adicionales por ahora"],
+    ["Foto de referencia", photoText],
+    ["Monto aproximado", money(calculateEstimate())]
+  ];
+}
+
+function renderBuilderSummary() {
+  builderSummary.innerHTML = buildSummaryRows()
+    .map(([label, value]) => `<p><span>${label}</span><strong>${value}</strong></p>`)
+    .join("");
+}
+
+function buildCakeSummary(photoUrl = "") {
+  const rows = buildSummaryRows(photoUrl);
+  return [
     "Hola D'Shannel, quisiera cotizar una torta personalizada.",
-    `Tamaño: ${cakeForm.mold.value}`,
-    `Sabor: ${cakeForm.flavor.value || "por definir"}`,
-    `Relleno: ${cakeForm.filling.value || "por definir"}`,
-    `Decoración: ${cakeForm.style.value.trim() || "por definir"}`,
-    `Fecha deseada: ${cakeForm.delivery.value || "por confirmar"}`,
-    `Detalles: ${cakeForm.notes.value.trim() || "sin detalles adicionales por ahora"}`,
-    photoLine,
-    `Monto aproximado mostrado: ${money(total)}`
+    ...rows.map(([label, value]) => `${label}: ${value}`)
   ].join("\n");
 }
 
@@ -174,20 +136,24 @@ function getFullConsultText() {
   return [`Cliente: ${name || "por indicar"}`, phone ? `Teléfono: ${phone}` : "", body].filter(Boolean).join("\n");
 }
 
-cakeForm.addEventListener("change", calculateEstimate);
-cakeForm.addEventListener("input", calculateEstimate);
-referencePhoto.addEventListener("change", () => {
-  const file = referencePhoto.files[0];
-  uploadedReference = null;
-  if (!file) {
-    clearReferencePhoto();
-    return;
-  }
+function setStep(index) {
+  currentStep = Math.max(0, Math.min(index, steps.length - 1));
+  steps.forEach((step, stepIndex) => step.classList.toggle("active", stepIndex === currentStep));
+  progressSteps.forEach((step, stepIndex) => step.classList.toggle("active", stepIndex === currentStep));
+  prevStep.classList.toggle("hidden", currentStep === 0);
+  nextStep.classList.toggle("hidden", currentStep === steps.length - 1);
+  prepareQuote.classList.toggle("hidden", currentStep !== steps.length - 1);
+  renderBuilderSummary();
+}
 
-  fileName.textContent = file.name;
-  previewImage.src = URL.createObjectURL(file);
-  uploadPreview.hidden = false;
-});
+function renderSocials() {
+  socialLinks.innerHTML = Object.values(socialData).map(item => `
+    <a class="social-card ${item.className}" href="${item.url}" target="_blank" rel="noreferrer">
+      <span class="social-icon">${item.icon}</span>
+      <strong>${item.label}</strong>
+    </a>
+  `).join("");
+}
 
 function clearReferencePhoto() {
   referencePhoto.value = "";
@@ -195,19 +161,20 @@ function clearReferencePhoto() {
   uploadPreview.hidden = true;
   previewImage.removeAttribute("src");
   fileName.textContent = "Imagen seleccionada";
-}
 
-removePhoto.addEventListener("click", clearReferencePhoto);
+  if (previewUrl) {
+    URL.revokeObjectURL(previewUrl);
+    previewUrl = null;
+  }
+
+  renderBuilderSummary();
+}
 
 async function uploadReferencePhoto() {
   const file = referencePhoto.files[0];
   if (!file) return null;
 
-  if (
-    uploadedReference &&
-    uploadedReference.fileName === file.name &&
-    uploadedReference.fileSize === file.size
-  ) {
+  if (uploadedReference && uploadedReference.fileName === file.name && uploadedReference.fileSize === file.size) {
     return uploadedReference;
   }
 
@@ -233,12 +200,73 @@ async function uploadReferencePhoto() {
   return uploadedReference;
 }
 
+function initReveals() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("visible");
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
+}
+
+menuToggle?.addEventListener("click", () => {
+  const isOpen = document.body.classList.toggle("menu-open");
+  menuToggle.setAttribute("aria-expanded", String(isOpen));
+});
+
+navLinks?.addEventListener("click", event => {
+  if (event.target.matches("a")) {
+    document.body.classList.remove("menu-open");
+    menuToggle?.setAttribute("aria-expanded", "false");
+  }
+});
+
+progressSteps.forEach(button => {
+  button.addEventListener("click", () => setStep(Number(button.dataset.goto)));
+});
+
+prevStep.addEventListener("click", () => setStep(currentStep - 1));
+nextStep.addEventListener("click", () => setStep(currentStep + 1));
+
+cakeForm.addEventListener("change", () => {
+  calculateEstimate();
+  renderBuilderSummary();
+});
+
+cakeForm.addEventListener("input", () => {
+  calculateEstimate();
+  renderBuilderSummary();
+});
+
+referencePhoto.addEventListener("change", () => {
+  const file = referencePhoto.files[0];
+  uploadedReference = null;
+
+  if (!file) {
+    clearReferencePhoto();
+    return;
+  }
+
+  if (previewUrl) URL.revokeObjectURL(previewUrl);
+  previewUrl = URL.createObjectURL(file);
+  previewImage.src = previewUrl;
+  fileName.textContent = file.name;
+  uploadPreview.hidden = false;
+  renderBuilderSummary();
+});
+
+removePhoto.addEventListener("click", clearReferencePhoto);
+
 cakeForm.addEventListener("submit", event => {
   event.preventDefault();
   requestSummary.value = buildCakeSummary();
   updateWhatsapp();
   document.querySelector("#contactenos").scrollIntoView({ behavior: "smooth" });
-  showToast("Consulta preparada.");
+  showToast("Consulta preparada para WhatsApp.");
 });
 
 clientName.addEventListener("input", () => {
@@ -251,6 +279,7 @@ clientPhone.addEventListener("input", () => {
 });
 
 consultForm.addEventListener("input", updateWhatsapp);
+
 whatsappLink.addEventListener("click", async event => {
   event.preventDefault();
   clientName.value = cleanClientName(clientName.value).trimStart();
@@ -264,7 +293,6 @@ whatsappLink.addEventListener("click", async event => {
 
   if (!requestSummary.value.trim()) {
     requestSummary.value = buildCakeSummary();
-    updateWhatsapp();
   }
 
   const file = referencePhoto.files[0];
@@ -274,11 +302,14 @@ whatsappLink.addEventListener("click", async event => {
       const uploaded = await uploadReferencePhoto();
       requestSummary.value = buildCakeSummary(uploaded.url);
     } catch (error) {
-      showToast(error.message || "No se pudo subir la foto. Se enviará la consulta sin enlace.");
+      const filename = file.name ? ` Archivo seleccionado: ${file.name}.` : "";
+      requestSummary.value = `${buildCakeSummary()}\nNota: la foto no pudo subirse en esta versión demo.${filename}`;
+      showToast(error.message || "No se pudo subir la foto. Se enviará el nombre del archivo.");
     }
   }
 
-  window.location.href = `https://wa.me/51993124676?text=${encodeURIComponent(getFullConsultText())}`;
+  const fullText = getFullConsultText();
+  window.location.href = `https://wa.me/51993124676?text=${encodeURIComponent(fullText)}`;
 });
 
 consultForm.addEventListener("submit", async event => {
@@ -292,27 +323,15 @@ consultForm.addEventListener("submit", async event => {
 
   try {
     await navigator.clipboard.writeText(fullText);
-    showToast("Consulta copiada. Ya puedes pegarla donde necesites.");
+    showToast("Consulta copiada.");
   } catch {
-    showToast("No se pudo copiar automáticamente, pero la consulta ya está lista.");
+    showToast("La consulta está lista para enviar.");
   }
 });
 
-function initReveals() {
-  const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("visible");
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.16 });
-
-  document.querySelectorAll(".reveal").forEach(element => observer.observe(element));
-}
-
-renderServices();
 renderSocials();
 calculateEstimate();
+renderBuilderSummary();
 updateWhatsapp();
+setStep(0);
 initReveals();
